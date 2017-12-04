@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Crear nuevo template</title>
+    </h:head>
+    <h:body>
+        <o:importConstants type="org.proundmega.dockes.core.TipoCampo" />
+        <h:form id="nuevaTemplate">
+            <div class="campos">
+                <div class="tupla">
+                    <h:outputLabel value="Nombre template: "/>
+                    <p:inputText value="#{frmNuevaTemplate.template.nombre}"/>
+                </div>
+
+                <ui:repeat var="campoTemplate" value="#{frmNuevaTemplate.template.camposTexto}">
+                    <div class="tupla">
+                        <h:outputText value="Nuevo campo: "/>
+                        <p:inputText value="#{campoTemplate.nombreCampo}"/>
+                        <h:commandButton value="Borrar" actionListener="#{frmNuevaTemplate.template.remove(campoTemplate)}"/>
+                    </div>
+                </ui:repeat>
+                
+                <ui:repeat var="campoTemplate" value="#{frmNuevaTemplate.template.camposArchivo}">
+                    <div class="tupla">
+                        <h:outputText value="Nuevo archivo: "/>
+                        <p:inputText value="#{campoTemplate.nombreCampo}"/>
+                        <h:commandButton value="Borrar" actionListener="#{frmNuevaTemplate.template.remove(campoTemplate)}"/>
+                    </div>
+                </ui:repeat>
+            </div>
+            
+            <h:commandButton value="Agregar campo">
+                <p:ajax process="@form" update="@form" listener="#{frmNuevaTemplate.template.addTexto()}"/>
+            </h:commandButton>
+            <h:commandButton value="Agregar archivo">
+                <p:ajax process="@form" update="@form" listener="#{frmNuevaTemplate.template.addArchivo()}"/>
+            </h:commandButton>
+            <h:commandButton value="Guardar template" action="#{frmNuevaTemplate.guardarTemplate()}"/>
+            <h:commandButton value="Borrar todo">
+                <p:ajax process="@form" update="@form" listener="#{frmNuevaTemplate.clear()}"/>
+            </h:commandButton>
+        </h:form>
+        
+        <h:link value="Agregar entrada" outcome="nueva_entrada" />
+        <br/>
+        <h:link value="Volver al inicio" outcome="index" />
+    </h:body>
+</html>
+

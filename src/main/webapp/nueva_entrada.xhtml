@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Nueva entrada</title>
+    </h:head>
+    <h:body>
+        <h:outputText id="error" />
+        
+        <h:form id="crearEntrada" enctype="multipart/form-data">
+            <p:selectOneMenu id="templates" value="#{frmNuevaEntrada.templateSeleccionada}"
+                             converter="omnifaces.SelectItemsConverter">
+                <p:ajax update="@form" listener="#{frmNuevaEntrada.onTemplateSeleccionada()}"/>
+                <f:selectItem itemLabel="Seleccione un template" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{frmNuevaEntrada.templatesDisponibles}" 
+                               var="item" itemLabel="#{item.nombre}"
+                               itemValue="#{item}"/>
+            </p:selectOneMenu>
+
+            <div class="entradas">
+                <ui:fragment rendered="#{frmNuevaEntrada.templateSeleccionada != null}">
+                    
+                    <!--  Este es para los campos de texto -->
+                    <div class="entrada">
+                        <ui:repeat value="#{frmNuevaEntrada.entrada.camposTexto}" var="entradaTexto">
+                            <h:outputText value="#{entradaTexto.template.nombreCampo}"/>
+                            <p:inputText value="#{entradaTexto.valor}"/>
+                        </ui:repeat>
+                    </div>
+
+                    <!--  Este es para los campos de archivo -->
+                    <div class="entrada">
+                        <ui:repeat value="#{frmNuevaEntrada.entrada.camposArchivo}" var="entradaArchivo">
+                            <h:outputText value="#{entradaArchivo.template.nombreCampo}"/>
+                            <h:inputFile value="#{entradaArchivo.parte}"/>
+                        </ui:repeat>
+                    </div>
+                    
+                    <h:commandButton value="Guardar entrada" action="#{frmNuevaEntrada.guardar()}" />
+                </ui:fragment>
+            </div>
+        </h:form>
+
+        <h:link value="Volver al inicio" outcome="index" />
+    </h:body>
+</html>
+
