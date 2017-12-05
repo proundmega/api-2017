@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -54,11 +56,19 @@ public class Entrada {
     }
     
     public void crearArchivos() throws IOException {
-        Files.createDirectory(new File(getPath()).toPath());
+        Files.createDirectories(new File(getPath()).toPath());
         
         for(CampoEntradaArchivo entradaArchivo : camposArchivo) {
             entradaArchivo.guardarArchivo();
         }
+    }
+    
+    public String getValorDeCampoTexto(CampoTemplate template) {
+        return camposTexto.stream()
+                .filter(campo -> campo.getTemplate().equals(template))
+                .map(campo -> campo.getValor())
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
     
 }

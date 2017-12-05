@@ -39,7 +39,7 @@ public class AlmacenTemplates {
     }
     
     public void addTemplate(Template nuevaTemplate) throws IOException {
-        Files.createDirectory(new File(nuevaTemplate.getPath()).toPath());
+        Files.createDirectories(new File(nuevaTemplate.getPath()).toPath());
         
         templates.add(nuevaTemplate);
     }

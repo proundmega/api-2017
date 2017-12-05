@@ -6,14 +6,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import lombok.Getter;
 import org.proundmega.dockes.core.Template;
 import org.proundmega.dockes.ejb.AlmacenTemplates;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class FrmNuevaTemplate implements Serializable {
     @Getter
     private Template template;
