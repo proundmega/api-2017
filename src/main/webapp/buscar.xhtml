@@ -44,10 +44,15 @@
                         </f:facet>
                         <h:outputText value="#{entrada.getValorDeCampoTexto(campo)}"/>
                     </p:columns>
+                    <p:ajax update="@form" process="@form" event="rowSelect"/>
                 </p:dataTable>
+                <h:commandButton value="Mostrar entrada" action="mostrar"
+                                 rendered="#{frmBuscar.entradaSeleccionada != null}">
+                    <f:param name="idEntrada" value="#{frmBuscar.entradaSeleccionada.id}"/>
+                </h:commandButton>
             </ui:fragment>
         </h:form>
-
+        <h:link value="Volver" outcome="index" />
     </h:body>
 </html>
 

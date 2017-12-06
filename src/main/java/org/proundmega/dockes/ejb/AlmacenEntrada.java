@@ -19,7 +19,7 @@ public class AlmacenEntrada {
     
     @PostConstruct
     private void iniciarCampos() {
-        numero = new AtomicInteger(1);
+        numero = new AtomicInteger(0);
         entradas = new ArrayList<>();
     }
     
@@ -55,5 +55,12 @@ public class AlmacenEntrada {
     
     private boolean stringLike(String aProbar, String patron) {
         return aProbar.toLowerCase().contains(patron.trim().toLowerCase());
+    }
+    
+    public Entrada findById(int id) {
+        return entradas.stream()
+                .filter(entrada -> entrada.getId() == id)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

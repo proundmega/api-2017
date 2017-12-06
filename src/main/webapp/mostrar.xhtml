@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mostrar entrada</title>
+    </h:head>
+    <h:body>
+        <h:form id="mostrar">
+            <p:dataTable var="tuplaTexto" value="#{frmMostrarEntrada.entrada.camposTexto}">
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{tuplaTexto.template.nombreCampo}"/>
+                </p:column>
+                <p:column headerText="valor">
+                    <h:outputText value="#{tuplaTexto.valor}"/>
+                </p:column>
+            </p:dataTable>
+
+            <p:dataTable var="tuplaArchivo" value="#{frmMostrarEntrada.entrada.camposArchivo}">
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{tuplaArchivo.nombreArchivo}" />
+                </p:column>
+                <p:column headerText="Tamaño">
+                    <h:outputText value="#{tuplaArchivo.documento.tamañoArchivo}" />
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{tuplaArchivo.documento.extensionArchivo}" />
+                </p:column>
+                <p:column style="width:24px">
+                    <p:commandLink update=":mostrar:panelInterno" oncomplete="PF('dialogoDocumento').show()" title="Ver detalle" styleClass="ui-icon ui-icon-search">
+                        <f:setPropertyActionListener value="#{tuplaArchivo.documento}" target="#{frmMostrarEntrada.documentoSeleccionado}" />
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog id="dialog" header="Detalles del documento" showEffect="fade" widgetVar="dialogoDocumento" modal="true" resizable="false">
+                <p:outputPanel id="panelInterno">
+                    <p:panelGrid  columns="2" columnClasses="label,value" rendered="#{not empty frmMostrarEntrada.documentoSeleccionado}">
+                        <h:outputLabel for="nombre" value="Nombre: " />
+                        <h:outputText id="nombre" value="#{frmMostrarEntrada.documentoSeleccionado.nombre}" style="font-weight:bold" />
+
+                        <h:outputLabel for="tamaño" value="Tamaño: " />
+                        <h:outputText id="tamaño" value="#{frmMostrarEntrada.documentoSeleccionado.tamañoArchivo}" style="font-weight:bold" />
+
+                        <h:outputLabel for="tipo" value="Tipo " />
+                        <h:outputText id="tipo" value="#{frmMostrarEntrada.documentoSeleccionado.extensionArchivo}" style="font-weight:bold" />
+                    </p:panelGrid>
+                </p:outputPanel>
+                <h:commandButton value="Descargar" actionListener="#{frmMostrarEntrada.descargarArchivo}" />
+            </p:dialog>
+        </h:form>
+
+
+        <h:link value="Volver a busqueda" outcome="buscar" />
+        <br/>
+        <h:link value="Volver al inicio" outcome="index" />
+    </h:body>
+</html>
+

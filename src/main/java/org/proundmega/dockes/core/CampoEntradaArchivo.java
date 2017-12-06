@@ -25,5 +25,14 @@ public class CampoEntradaArchivo {
         try (InputStream stream = parte.getInputStream()) {
             Files.copy(stream, new File(pathPadre, parte.getSubmittedFileName()).toPath());
         }
+        nombreArchivo = parte.getSubmittedFileName();
+    }
+    
+    private String getPathCompleto() {
+        return pathPadre + File.separator + nombreArchivo;
+    }
+    
+    public Documento getDocumento() {
+        return new Documento(getPathCompleto());
     }
 }

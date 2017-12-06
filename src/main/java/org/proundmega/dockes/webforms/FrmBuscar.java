@@ -64,4 +64,8 @@ public class FrmBuscar implements Serializable {
         return entradasResultantes;
     }
     
+    public String mostrarEntrada() {
+        return "mostrar.xhtml?idEntrada=" + entradaSeleccionada.getId();
+    }
+    
 }
