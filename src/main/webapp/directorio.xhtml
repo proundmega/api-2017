@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Estructura de directorio</title>
+    </h:head>
+    <h:body>
+        <h:form id="directorio">
+            <p:treeTable var="nodo" value="#{frmDirectorio.nodoRoot}" >
+                <f:facet name="header">
+                    Arbol de entradas
+                </f:facet>
+
+                <p:column headerText="Entradas">
+                    <ui:fragment rendered="#{nodo.getClass().simpleName == 'Entrada'}">
+                        <h:outputText value="#{nodo.id}"/>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{nodo.getClass().simpleName != 'Entrada'}">
+                        <h:outputText value="#{nodo}"/>
+                    </ui:fragment>
+                </p:column>
+                
+                <p:column headerText="Seleccion">
+                    <ui:fragment rendered="#{nodo.getClass().simpleName == 'Entrada'}">
+                        <h:commandButton value="Ver entrada" action="mostrar">
+                            <f:param name="idEntrada" value="#{nodo.id}"/>
+                        </h:commandButton>
+                    </ui:fragment>
+                </p:column>
+
+
+            </p:treeTable>
+        </h:form>
+    </h:body>
+</html>
+

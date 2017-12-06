@@ -11,6 +11,7 @@ import javax.ejb.Singleton;
 import org.proundmega.dockes.core.CampoEntradaTexto;
 import org.proundmega.dockes.core.CampoTemplate;
 import org.proundmega.dockes.core.Entrada;
+import org.proundmega.dockes.core.Template;
 
 @Singleton
 public class AlmacenEntrada {
@@ -62,5 +63,11 @@ public class AlmacenEntrada {
                 .filter(entrada -> entrada.getId() == id)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+    
+    public List<Entrada> findByTemplate(Template template) {
+        return entradas.stream()
+                .filter(entrada -> entrada.getTemplate().equals(template))
+                .collect(Collectors.toList());
     }
 }
